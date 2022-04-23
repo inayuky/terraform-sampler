@@ -1,5 +1,5 @@
-# 最新のAmazonLinux2 AMI
-data "aws_ami" "latest_amzn2_ami" {
+# 最新のAmazonLinux2のイメージ
+data "aws_ami" "latest_amzn2" {
   owners      = ["amazon"]
   most_recent = true
   filter {
@@ -8,8 +8,13 @@ data "aws_ami" "latest_amzn2_ami" {
   }
 }
 
+resource "aws_key_pair" "this" {
+  key_name   = "ec2_key"
+  public_key = file("./ec2_key.pub")
+}
+
 resource "aws_instance" "this" {
-  ami = data.aws_ami.latest_amzn2_ami.id
+  ami = data.aws_ami.latest_amzn2.id
 
   instance_type = "t3.micro"
 
@@ -17,6 +22,7 @@ resource "aws_instance" "this" {
 
   subnet_id = aws_subnet.public.id
 
+  key_name = aws_key_pair.this.key_name
 }
 
 output "public_ip" {
