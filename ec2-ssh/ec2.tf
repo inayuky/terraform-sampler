@@ -1,3 +1,8 @@
+variable "key_name" {
+  type    = string
+  default = "ec2_key"
+}
+
 # 最新のAmazonLinux2のイメージ
 data "aws_ami" "latest_amzn2" {
   owners      = ["amazon"]
@@ -9,8 +14,8 @@ data "aws_ami" "latest_amzn2" {
 }
 
 resource "aws_key_pair" "this" {
-  key_name   = "ec2_key"
-  public_key = file("./ec2_key.pub")
+  key_name   = var.key_name
+  public_key = file("${var.key_name}.pub")
 }
 
 resource "aws_instance" "this" {
@@ -27,4 +32,8 @@ resource "aws_instance" "this" {
 
 output "public_ip" {
   value = aws_instance.this.public_ip
+}
+
+output "ssh_command" {
+  value = "ssh -i ${var.key_name} ec2-user@${aws_instance.this.public_ip}"
 }
