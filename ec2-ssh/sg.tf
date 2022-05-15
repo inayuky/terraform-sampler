@@ -1,4 +1,4 @@
-resource "aws_security_group" "this" {
+resource "aws_security_group" "ssh" {
   name   = "ssh_sg"
   vpc_id = aws_vpc.this.id
 }
@@ -9,7 +9,7 @@ resource "aws_security_group_rule" "ingress" {
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.this.id
+  security_group_id = aws_security_group.ssh.id
 }
 
 resource "aws_security_group_rule" "egress" {
@@ -18,5 +18,29 @@ resource "aws_security_group_rule" "egress" {
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.this.id
+  security_group_id = aws_security_group.ssh.id
 }
+
+# httpのSGが必要な場合は以下のように追加する
+# resource "aws_security_group" "http" {
+#   name   = "http_sg"
+#   vpc_id = aws_vpc.this.id
+# }
+
+# resource "aws_security_group_rule" "http_ingress" {
+#   type              = "ingress"
+#   from_port         = 80
+#   to_port           = 80
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = aws_security_group.http.id
+# }
+
+# resource "aws_security_group_rule" "http_egress" {
+#   type              = "egress"
+#   from_port         = 0
+#   to_port           = 0
+#   protocol          = "-1"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = aws_security_group.http.id
+# }
