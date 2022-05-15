@@ -23,11 +23,23 @@ resource "aws_instance" "this" {
 
   instance_type = "t3.micro"
 
-  vpc_security_group_ids = [aws_security_group.this.id]
+  vpc_security_group_ids = [aws_security_group.ssh.id]
+  # httpのSGを追加する場合は以下のようにする
+  # vpc_security_group_ids = [aws_security_group.ssh.id, aws_security_group.http.id]
 
   subnet_id = aws_subnet.public.id
 
   key_name = aws_key_pair.this.key_name
+
+  tags = {
+    Name = "sample1"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      ami
+    ]
+  }
 }
 
 output "public_ip" {
