@@ -8,7 +8,7 @@ variable "key_name" {
 # リソース名
 # 他のリソースと区別するため設定する
 # 簡単のため共通の名前を使用する
-variable "resouce_name" {
+variable "resource_name" {
   type    = string
   default = "sample1"
 }

@@ -42,7 +42,7 @@ resource "aws_instance" "this" {
   key_name = aws_key_pair.this.key_name
 
   tags = {
-    Name = var.resouce_name # インスタンス名
+    Name = var.resource_name # インスタンス名
   }
 
   lifecycle {

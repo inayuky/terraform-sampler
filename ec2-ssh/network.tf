@@ -5,7 +5,7 @@ resource "aws_vpc" "this" {
   enable_dns_hostnames = true          # VPC内のリソースにパブリックDNSホスト名を自動的に割り当てる
 
   tags = {
-    Name = var.resouce_name
+    Name = var.resource_name
   }
 }
 
@@ -17,7 +17,7 @@ resource "aws_subnet" "public" {
   availability_zone       = "ap-northeast-1a" # AZ指定
 
   tags = {
-    Name = var.resouce_name
+    Name = var.resource_name
   }
 }
 
@@ -26,7 +26,7 @@ resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
 
   tags = {
-    Name = var.resouce_name
+    Name = var.resource_name
   }
 }
 
@@ -35,7 +35,7 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.this.id
 
   tags = {
-    Name = var.resouce_name
+    Name = var.resource_name
   }
 }
 
