@@ -1,3 +1,4 @@
+# SSHのセキュリティグループ
 resource "aws_security_group" "ssh" {
   name   = "ssh_sg"
   vpc_id = aws_vpc.this.id
@@ -8,7 +9,7 @@ resource "aws_security_group_rule" "ingress" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = ["0.0.0.0/0"] # 接続元を限定する場合は変更する
   security_group_id = aws_security_group.ssh.id
 }
 
@@ -21,7 +22,8 @@ resource "aws_security_group_rule" "egress" {
   security_group_id = aws_security_group.ssh.id
 }
 
-# httpのSGが必要な場合は以下のように追加する
+# セキュリティグループの追加方法
+# たとえば、httpのセキュリティグループが必要な場合は以下のように追加する
 # resource "aws_security_group" "http" {
 #   name   = "http_sg"
 #   vpc_id = aws_vpc.this.id
