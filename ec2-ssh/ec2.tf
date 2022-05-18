@@ -9,7 +9,7 @@ data "aws_ami" "latest_amzn2" {
 }
 
 # キーペア
-# 変数名から取得
+# 変数で指定した値を設定
 resource "aws_key_pair" "this" {
   key_name   = var.key_name
   public_key = file("${var.key_name}.pub")

@@ -1,5 +1,5 @@
 # 鍵の名前
-# 秘密鍵ファイル名に相当する名前
+# 秘密鍵のファイル名に相当する名前
 variable "key_name" {
   type    = string
   default = "ec2_key"
